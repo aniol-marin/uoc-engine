@@ -40,6 +40,9 @@
     <Filter Include="RenderableVertexs">
       <UniqueIdentifier>{2c396100-b830-43c9-a434-f81d8f0324ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AnimatedModels">
+      <UniqueIdentifier>{6d0f3dfc-7b44-4210-b1de-e8bbb1630dc2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Camera.h">
@@ -119,6 +122,15 @@
     </ClInclude>
     <ClInclude Include="Source\ApplicationDX.h" />
     <ClInclude Include="Source\defines.h" />
+    <ClInclude Include="Source\AnimatedCoreModel.h">
+      <Filter>AnimatedModels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AnimatedModelManager.h">
+      <Filter>AnimatedModels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AnimatedInstanceModel.h">
+      <Filter>Render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Camera.cpp">
@@ -193,5 +205,14 @@
     <ClCompile Include="Source\ApplicationDX.cpp" />
     <ClCompile Include="Source\defines.cpp" />
     <ClCompile Include="Source\UOC Motor 2D_3D.cpp" />
+    <ClCompile Include="Source\AnimatedCoreModel.cpp">
+      <Filter>AnimatedModels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AnimatedModelManager.cpp">
+      <Filter>AnimatedModels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AnimatedInstanceModel.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -63,17 +63,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_XM_NO_INTRINSICS_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\Expat;C:\Program Files\Autodesk\FBX\FBX SDK\2020.1.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\Expat;C:\Program Files\Autodesk\FBX\FBX SDK\2020.1.1\include;$(SolutionDir)ThirdParty\AntTweakBar\include;$(SolutionDir)\ThirdParty\</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile />
       <PrecompiledHeaderOutputFile />
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\Expat;C:\Program Files\Autodesk\FBX\FBX SDK\2020.1.1\lib\vs2017\x86\debug</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d11.lib;libfbxsdk-md.lib;libxml2-md.lib;zlib-md.lib;winmm.lib;libexpat.lib;D3DCompiler.lib;dinput8.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\Expat;C:\Program Files\Autodesk\FBX\FBX SDK\2020.1.1\lib\vs2017\x86\debug;$(SolutionDir)lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d11.lib;libfbxsdk-md.lib;libxml2-md.lib;zlib-md.lib;winmm.lib;libexpat.lib;D3DCompiler.lib;dinput8.lib;dxguid.lib;cal3d_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -86,22 +84,23 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_XM_NO_INTRINSICS_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\Expat;C:\Program Files\Autodesk\FBX\FBX SDK\2020.1.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\Expat;C:\Program Files\Autodesk\FBX\FBX SDK\2020.1.1\include;$(SolutionDir)ThirdParty\AntTweakBar\include;$(SolutionDir)\ThirdParty\</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile />
       <PrecompiledHeaderOutputFile />
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\Expat;C:\Program Files\Autodesk\FBX\FBX SDK\2020.1.1\lib\vs2017\x86\release</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d11.lib;libfbxsdk-md.lib;libxml2-md.lib;zlib-md.lib;winmm.lib;libexpat.lib;D3DCompiler.lib;dinput8.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\Expat;C:\Program Files\Autodesk\FBX\FBX SDK\2020.1.1\lib\vs2017\x86\release;$(SolutionDir)lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d11.lib;libfbxsdk-md.lib;libxml2-md.lib;zlib-md.lib;winmm.lib;libexpat.lib;D3DCompiler.lib;dinput8.lib;dxguid.lib;cal3d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\AnimatedCoreModel.h" />
+    <ClInclude Include="Source\AnimatedInstanceModel.h" />
+    <ClInclude Include="Source\AnimatedModelManager.h" />
     <ClInclude Include="Source\ApplicationDX.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\CameraController.h" />
@@ -131,6 +130,9 @@
     <ClInclude Include="ThirdParty\expat\XMLParser.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\AnimatedCoreModel.cpp" />
+    <ClCompile Include="Source\AnimatedInstanceModel.cpp" />
+    <ClCompile Include="Source\AnimatedModelManager.cpp" />
     <ClCompile Include="Source\ApplicationDX.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\CameraController.cpp" />

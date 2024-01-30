@@ -1,6 +1,7 @@
 #ifndef _UOC_ENGINE_H_
 #define _UOC_ENGINE_H_
 
+#include "AntTweakBar.h"
 #include <D3D11.h>
 #include "defines.h"
 
@@ -12,12 +13,14 @@ class CDebugRender;
 class CFBXManager;
 class CRenderableObjectManager;
 class CTextureManager;
+class CAnimatedModelManager;
 
 class CUOCEngine
 {
 private:
 	static CUOCEngine			*m_UOCEngine;
 	CRenderManager				*m_RenderManager;
+	TwBar						*m_Bar;
 	bool						m_DrawAntTweakBar;
 	CEffectManager 				*m_EffectManager;
 	CInputManager				*m_InputManager;
@@ -28,6 +31,7 @@ private:
 	CFBXManager					*m_FBXManager;
 	CRenderableObjectManager	*m_RenderableObjectManager;
 	CTextureManager				*m_TextureManager;
+	CAnimatedModelManager		*m_AnimatedModelManager;
 
 	CUOCEngine();
 
@@ -48,6 +52,9 @@ public:
 	CFBXManager	* GetFBXManager() const { return m_FBXManager; }
 	CRenderableObjectManager * GetRenderableObjectManager() const { return m_RenderableObjectManager; }
 	CTextureManager * GetTextureManager() const { return m_TextureManager; }
+	CAnimatedModelManager * GetAnimatedModelManager() const { return m_AnimatedModelManager; }
+	bool IsAntTweakBarActive() const { return m_DrawAntTweakBar; }
+	void ToggleAnTweakBar() { m_DrawAntTweakBar = !m_DrawAntTweakBar; }
 	float GetElapsedTime() const { return m_ElapsedTime; }
 };
 

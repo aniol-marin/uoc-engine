@@ -45,7 +45,7 @@ public:
 };
 
 template <class T>
-class CEffectTemplated : public CEffect
+class CEffectTemplated : CEffect
 {
 private:
 	ID3D11VertexShader *m_VertexShader;

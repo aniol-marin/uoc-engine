@@ -12,69 +12,69 @@
 #include "EffectManager.h"
 #include "UOCEngine.h"
 #include "RenderManager.h"
-
-constexpr std::string_view fbxFile = "data/models/world/World.fbx";
+#include "AnimatedModelManager.h"
+#include "RenderableObjectManager.h"
 
 CApplicationDX::CApplicationDX()
-	: m_Player(NULL)
+: m_Player(NULL)
 {
 }
 
 CApplicationDX::~CApplicationDX()
 {
-	//TO DO : Llamar al mï¿½todo Destroy de la clase singleton CUOCEngine
-	CUOCEngine* l_Engine = CUOCEngine::GetEngine();
+	CUOCEngine *l_Engine=CUOCEngine::GetEngine();
+
 	l_Engine->Destroy();
-	//TO DO : Hacer el CHECKED_DELETE del singleton de la clase CUOCEngine
 	CHECKED_DELETE(l_Engine);
-	//TO DO : Hacer el CHECKED_DELETE de la instancia del Player
 	CHECKED_DELETE(m_Player);
 }
 
 void CApplicationDX::Init(HWND hWnd, int Width, int Height)
 {
-	//TO DO : Inicializar el motor llamando al mï¿½todo Init de la clase singleton CUOCEngine
-	CUOCEngine* l_Engine = CUOCEngine::GetEngine();
+	CUOCEngine *l_Engine=CUOCEngine::GetEngine();
 	l_Engine->Init(hWnd, Width, Height);
-	//TO DO : Crear la instancia de la clase CPlayer
-	m_Player = new CPlayer();
-	//TO DO : Llamar al mï¿½todo Load del FBXManager del motor y cargar el fichero fbx "data/models/world/World.fbx"
-	l_Engine->GetFBXManager()->Load(fbxFile.data());
+	m_Player=new CPlayer;
+	l_Engine->GetFBXManager()->Load("data/models/world/World.fbx");
+	
+	CAnimatedCoreModel *l_AnimatedCoreModel;
+	//TO DO : Inicializar la variable l_AnimatedCoreModel recogiendo el Actor de nombre "bot" y path "Data/Models/Bot/" de la clase CAnimatedModelManager que se encuentra en la clase CUOCEngine
+	//TO DO : Añade un modelo animado de tipo l_AnimatedCoreModel en la clase CRenderableObjectManager que se encuentra en la clase CUOCEngine en la posición (0.0f, 0.0f, 0.0f), rotación (0.0f, 0.0f, 0.0f) y escala (2.0f, 2.0f, 2.0f)
+	//TO DO : Añade un modelo animado de tipo l_AnimatedCoreModel en la clase CRenderableObjectManager que se encuentra en la clase CUOCEngine en la posición (33.0f, 2.3f, -18.0f), rotación (0.0f, 0.0f, 0.0f) y escala (2.0f, 2.0f, 2.0f)
+	//TO DO : Añade un modelo animado de tipo l_AnimatedCoreModel en la clase CRenderableObjectManager que se encuentra en la clase CUOCEngine en la posición (68.0f, -0.8f, 6.0f), rotación (0.0f, 0.0f, 0.0f) y escala (2.0f, 2.0f, 2.0f)
+	//TO DO : Añade un modelo animado de tipo l_AnimatedCoreModel en la clase CRenderableObjectManager que se encuentra en la clase CUOCEngine en la posición (17.0f, -5.7f, 31.0f), rotación (0.0f, 0.0f, 0.0f) y escala (2.0f, 2.0f, 2.0f)
 }
 
 void CApplicationDX::Render()
 {
-	//TO DO : Llamar al mï¿½todo Render de la clase singleton CUOCEngine
 	CUOCEngine::GetEngine()->Render();
 }
 
 void CApplicationDX::Update()
 {
-	auto l_Engine = CUOCEngine::GetEngine();
-
-	//TO DO : Llamar al mï¿½todo Update de la clase singleton CUOCEngine
+	CUOCEngine *l_Engine=CUOCEngine::GetEngine();
 	l_Engine->Update();
-	//TO DO : Llamar al mï¿½todo Update de la instancia player pasï¿½ndole el elapsed time del motor
 	m_Player->Update(l_Engine->GetElapsedTime());
 }
 
 LRESULT WINAPI CApplicationDX::MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	switch (msg)
-	{
-	case WM_DESTROY:
-		PostQuitMessage(0);
+	if (TwEventWin(hWnd, msg, wParam, lParam))
 		return 0;
-	case WM_KEYDOWN:
-	{
-		switch (wParam)
+	switch( msg )
+    {
+		case WM_DESTROY:
+            PostQuitMessage( 0 );
+            return 0;
+		case WM_KEYDOWN:
 		{
-		case VK_ESCAPE:
-			PostQuitMessage(0);
-			return 0;
-			break;
+			switch( wParam )
+			{
+				case VK_ESCAPE:
+					PostQuitMessage( 0 );
+					return 0;
+					break;
+			}
 		}
-	}
-	}
-	return DefWindowProc(hWnd, msg, wParam, lParam);
+    }
+    return DefWindowProc( hWnd, msg, wParam, lParam );
 }

@@ -2,9 +2,10 @@
 #define _RENDERABLE_OBJECT_MANAGER_H_
 
 #include <vector>
-#include <d3d11.h>
+#include "defines.h"
 
 class CRenderableObject;
+class CAnimatedCoreModel;
 
 class CRenderableObjectManager
 {
@@ -16,6 +17,7 @@ public:
 	void Update(float ElapsedTime);
 	void Render(ID3D11DeviceContext *DeviceContext);
 	void AddRenderableObject(CRenderableObject *RenderableObject);
+	void AddAnimatedModel(CAnimatedCoreModel *AnimatedCoreModel, const XMFLOAT3 &Position, const XMFLOAT3 &Rotation, const XMFLOAT3 &Scale);
 };
 
 #endif
