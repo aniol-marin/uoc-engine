@@ -1,0 +1,18 @@
+[submodule "src/external/stb"]
+	path = src/external/stb
+	url = https://github.com/nothings/stb.git
+[submodule "src/external/raylib"]
+	path = src/external/raylib
+	url = https://github.com/raysan5/raylib.git
+[submodule "src/external/glfw"]
+	path = src/external/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "src/external/raudio"]
+	path = src/external/raudio
+	url = https://github.com/karamazov-alyosha/moleRaudio.git
+[submodule "src/external/sdl"]
+	path = src/external/sdl
+	url = https://github.com/libsdl-org/SDL.git
+[submodule "src/external/FBXSDK"]
+	path = src/external/FBXSDK
+	url = https://github.com/metarutaiga/FBXSDK.git
