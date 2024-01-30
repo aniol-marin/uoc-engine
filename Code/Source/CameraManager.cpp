@@ -5,106 +5,166 @@
 #include "Frustum.h"
 #include "InputManager.h"
 
-CCameraManager::CCameraManager()
-{
-	//TO DO : Construir la instancia del Frustum de la cámara
-	//TO DO : Construir una instancia de CFPSCameraController e insertarla en la variable miembro m_CameraControllers con nombre "player"
+constexpr std::string_view g_PlayerString = "player";
+constexpr std::string_view g_NameString = "name";
+constexpr std::string_view g_PosxString = "posx";
+constexpr std::string_view g_PosyString = "posy";
+constexpr std::string_view g_PoszString = "posz";
+
+CCameraManager::CCameraManager() :
+	//TO DO : Construir la instancia del Frustum de la cï¿½mara
+	m_Frustum{ new CFrustum },
 	//TO DO : Establecer la varaible m_CameraControllerControl a "player"
+	m_CameraControllerControl{ g_PlayerString },
 	//TO DO : Establecer la varaible m_CameraControllerVision a "player"
+	m_CameraControllerVision{ g_PlayerString },
+	m_Camera{},
+	m_CameraControllers{}
+{
+	//TO DO : Construir una instancia de CFPSCameraController e insertarla en la variable miembro m_CameraControllers con nombre "player"
+	m_CameraControllers.insert({ g_PlayerString.data(), new CFPSCameraController() });
 }
 
 CCameraManager::~CCameraManager()
 {
-	//TO DO : Recorrer todo el mapa de CameraController y eliminar los controladores de cámara utilizando la macro CHECKED_DELETE
-	//TO DO : Eliminar la instancia de frustum de cámara utilizando la macro CHECKED_DELETE
+	//TO DO : Recorrer todo el mapa de CameraController y eliminar los controladores de cï¿½mara utilizando la macro CHECKED_DELETE
+	for (auto& l_Controller : m_CameraControllers) {
+		CHECKED_DELETE(l_Controller.second);
+	}
+	//TO DO : Eliminar la instancia de frustum de cï¿½mara utilizando la macro CHECKED_DELETE
+	CHECKED_DELETE(m_Frustum);
 }
 
-void CCameraManager::AddCameraController(TCameraControllerType CameraControllerType, const std::string &Name, const XMFLOAT3 &Position, float Zoom)
+void CCameraManager::AddCameraController(TCameraControllerType CameraControllerType, const std::string& Name, const XMFLOAT3& Position, float Zoom)
 {
-	CCameraController *l_CameraController=NULL;
-		
-	switch(CameraControllerType)
+	CCameraController* l_CameraController{};
+	CSphericalCameraController* l_Handle;
+
+	switch (CameraControllerType)
 	{
-		case SPHERICAL_CAMERA_CONTROLLER:
-			//TO DO : Construir una instancia de tipo CSphericalCameraController en la variable l_CameraController
-			//TO DO : Establecer el Zoom en el controlador de cámara utilizando el método SetZoom de la clase CSphericalCameraController pasándole el parámetro Zoom
-			break;
-		case FPS_CAMERA_CONTROLLER:
-			//TO DO : Construir una instancia de tipo CFPSCameraController en la variable l_CameraController
-			break;
+	case SPHERICAL_CAMERA_CONTROLLER:
+		//TO DO : Construir una instancia de tipo CSphericalCameraController en la variable l_CameraController
+		l_Handle = new CSphericalCameraController();
+		l_CameraController = l_Handle;
+		//TO DO : Establecer el Zoom en el controlador de cï¿½mara utilizando el mï¿½todo SetZoom de la clase CSphericalCameraController pasï¿½ndole el parï¿½metro Zoom
+		l_Handle->SetZoom(Zoom);
+		break;
+	case FPS_CAMERA_CONTROLLER:
+		//TO DO : Construir una instancia de tipo CFPSCameraController en la variable l_CameraController
+		l_CameraController = new CFPSCameraController();
+		break;
 	}
-	//TO DO : Establecer la posición en el controlador de cámara utilizando el método SetPosition 
-	//TO DO : Insertar el controlador de cámara en la variable miembro m_CameraControllers según la clave Name
+	//TO DO : Establecer la posiciï¿½n en el controlador de cï¿½mara utilizando el mï¿½todo SetPosition 
+	l_CameraController->SetPosition(Position);
+	//TO DO : Insertar el controlador de cï¿½mara en la variable miembro m_CameraControllers segï¿½n la clave Name
+	m_CameraControllers.insert({ Name, l_CameraController });
 }
 
 void CCameraManager::ChangeVision()
 {
-	//TO DO : Utilizar el método find de la instancia m_CameraControllers para encontrar el controlador de cámara m_CameraControllerControl
-	//TO DO : Si encontramos el controlador de cámara avanzamos al siguiente controlador de cámara
-	//TO DO : Si el controlador de cámara no es el end del m_CameraControllers asignamos a m_CameraControllerVision el first del iterador
-	//TO DO : Si el controlador de cámara es el end del m_CameraControllers asignamos a m_CameraControllerVision el first del begin m_CameraControllers
+	//TO DO : Utilizar el mï¿½todo find de la instancia m_CameraControllers para encontrar el controlador de cï¿½mara m_CameraControllerControl
+	auto l_Handle = m_CameraControllers.find(m_CameraControllerControl);
+
+	//TO DO : Si encontramos el controlador de cï¿½mara avanzamos al siguiente controlador de cï¿½mara
+	if (l_Handle != m_CameraControllers.end()) {
+		l_Handle = std::next(l_Handle);
+	}
+
+	//TO DO : Si el controlador de cï¿½mara no es el end del m_CameraControllers asignamos a m_CameraControllerVision el first del iterador
+	if (l_Handle != m_CameraControllers.end()) {
+		m_CameraControllerVision = l_Handle->first;
+	}
+	//TO DO : Si el controlador de cï¿½mara es el end del m_CameraControllers asignamos a m_CameraControllerVision el first del begin m_CameraControllers
+	else {
+		m_CameraControllerVision = m_CameraControllers.begin()->first;
+	}
 }
 
-void CCameraManager::onStartElement(const std::string &elem, MKeyValue &atts)
+void CCameraManager::onStartElement(const std::string& elem, MKeyValue& atts)
 {
-	if(elem=="SphericalCameraController")
-    {
+	if (elem == "SphericalCameraController")
+	{
 		float l_Zoom;
 		XMFLOAT3 l_Position;
-		std::string l_Name=atts["name"];
-		std::string l_PosX=atts["posx"];
-		std::string l_PosY=atts["posy"];
-		std::string l_PosZ=atts["posz"];
-		std::string l_ZoomStr=atts["zoom"];
-	  	  
-		sscanf_s(l_PosX.c_str(),"%f",&l_Position.x);
-		sscanf_s(l_PosY.c_str(),"%f",&l_Position.y);
-		sscanf_s(l_PosZ.c_str(),"%f",&l_Position.z);
-		sscanf_s(l_ZoomStr.c_str(),"%f",&l_Zoom);
-	  
-		//TO DO : Añadir un controlador de cámara esférica utilizando el método AddCameraController
-    }
-	else if(elem=="FPSCameraController")
-    {
-		//TO DO : Recoger el nombre del controlador de cámara de los atributos del xml name
-		//NOTA : Basarse en cómo recoge la posición de los atributos xml en la cámara de tipo SphericalCameraController
-		//TO DO : Recoger la posición x del controlador de cámara de los atributos del xml posx
-		//TO DO : Recoger la posición y del controlador de cámara de los atributos del xml posy
-		//TO DO : Recoger la posición z del controlador de cámara de los atributos del xml posz
-		//TO DO : Añadir un controlador de cámara FPS utilizando el método AddCameraController
-    }
+		std::string l_Name = atts["name"];
+		std::string l_PosX = atts["posx"];
+		std::string l_PosY = atts["posy"];
+		std::string l_PosZ = atts["posz"];
+		std::string l_ZoomStr = atts["zoom"];
+
+		sscanf_s(l_PosX.c_str(), "%f", &l_Position.x);
+		sscanf_s(l_PosY.c_str(), "%f", &l_Position.y);
+		sscanf_s(l_PosZ.c_str(), "%f", &l_Position.z);
+		sscanf_s(l_ZoomStr.c_str(), "%f", &l_Zoom);
+
+		//TO DO : Aï¿½adir un controlador de cï¿½mara esfï¿½rica utilizando el mï¿½todo AddCameraController
+		AddCameraController(SPHERICAL_CAMERA_CONTROLLER, l_Name, l_Position, l_Zoom);
+	}
+	else if (elem == "FPSCameraController")
+	{
+		//TO DO : Recoger el nombre del controlador de cï¿½mara de los atributos del xml name
+		//NOTA : Basarse en cï¿½mo recoge la posiciï¿½n de los atributos xml en la cï¿½mara de tipo SphericalCameraController
+		const std::string l_Name = atts[g_NameString.data()];
+		//TO DO : Recoger la posiciï¿½n x del controlador de cï¿½mara de los atributos del xml posx
+		const std::string l_PosX = atts[g_PosxString.data()];
+		//TO DO : Recoger la posiciï¿½n y del controlador de cï¿½mara de los atributos del xml posy
+		const std::string l_PosY = atts[g_PosyString.data()];
+		//TO DO : Recoger la posiciï¿½n z del controlador de cï¿½mara de los atributos del xml posz
+		const std::string l_PosZ = atts[g_PoszString.data()];
+
+		XMFLOAT3 l_Position{};
+		sscanf_s(l_PosX.c_str(), "%f", &l_Position.x);
+		sscanf_s(l_PosY.c_str(), "%f", &l_Position.y);
+		sscanf_s(l_PosZ.c_str(), "%f", &l_Position.z);
+
+		//TO DO : Aï¿½adir un controlador de cï¿½mara FPS utilizando el mï¿½todo AddCameraController
+		AddCameraController(FPS_CAMERA_CONTROLLER, l_Name, l_Position);
+	}
+}
+bool CCameraManager::SphereVisible(const XMFLOAT3& Center, float Radius) const {
+	//TO DO : Utiliza el mï¿½todo SphereVisible de la instancia m_Frustum para saber si una esfera es visible por el frustum de cï¿½mara
+	return m_Frustum->SphereVisible(Center, Radius);
 }
 
-bool CCameraManager::SphereVisible(const XMFLOAT3 &Center, float Radius) const
+bool CCameraManager::BoxVisible(const XMFLOAT3& max, const XMFLOAT3& min) const
 {
-	//TO DO : Utiliza el método SphereVisible de la instancia m_Frustum para saber si una esfera es visible por el frustum de cámara
+	//TO DO : Utiliza el mï¿½todo BoxVisible de la instancia m_Frustum para saber si una caja es visible por el frustum de cï¿½mara
+	return m_Frustum->BoxVisible(max, min);
 }
 
-bool CCameraManager::BoxVisible( const XMFLOAT3 &max, const XMFLOAT3 &min ) const
+CCameraController* CCameraManager::GetCameraController(const std::string& Name) const
 {
-	//TO DO : Utiliza el método BoxVisible de la instancia m_Frustum para saber si una caja es visible por el frustum de cámara
-}
+	CCameraController* l_Result{};
 
-CCameraController * CCameraManager::GetCameraController(const std::string &Name) const
-{
-	//TO DO : Buscamos el controlador de cámara utilizando el método find de m_CameraControllers
-	//TO DO : Si lo encontramos devolvemos el second del iterador que nos devuelve el método find de m_CameraControllers
-	//TO DO : Devuelve NULL en caso de no encontrar el controlador de cámara
+	//TO DO : Buscamos el controlador de cï¿½mara utilizando el mï¿½todo find de m_CameraControllers
+	const auto& l_Handle = m_CameraControllers.find(Name);
+	//TO DO : Si lo encontramos devolvemos el second del iterador que nos devuelve el mï¿½todo find de m_CameraControllers
+	if (l_Handle != m_CameraControllers.end()) {
+		l_Result = l_Handle->second;
+	}
+
+	//TO DO : Devuelve NULL en caso de no encontrar el controlador de cï¿½mara
+	return l_Result;
 }
 
 void CCameraManager::Update(float ElapsedTime)
 {
-	//TO DO : Actualiza el controlador de cámara con nombre m_CameraControllerControl utilizando el método Update
-	//TO DO : Establece el controlador de cámara con nombre m_CameraControllerVision utilizando el método SetCamera
-	//TO DO : Llamar al método UpdateFrustumCamera para que se actualice el Frustum de la cámara
+	//TO DO : Actualiza el controlador de cï¿½mara con nombre m_CameraControllerControl utilizando el mï¿½todo Update
+	GetCameraController(m_CameraControllerControl)->Update(ElapsedTime);
+	//TO DO : Establece el controlador de cï¿½mara con nombre m_CameraControllerVision utilizando el mï¿½todo SetCamera
+	GetCameraController(m_CameraControllerVision)->SetCamera(&m_Camera);
+	//TO DO : Llamar al mï¿½todo UpdateFrustumCamera para que se actualice el Frustum de la cï¿½mara
+	UpdateFrustumCamera();
 }
 
 void CCameraManager::UpdateFrustumCamera()
 {
-	//TO DO : Actualiza el frustum de la cámara llamando al método Update de la variable miembro m_Frustum pasándoel las matrices de View y de Proyección de la instancia m_Camera
+	//TO DO : Actualiza el frustum de la cï¿½mara llamando al mï¿½todo Update de la variable miembro m_Frustum pasï¿½ndoel las matrices de View y de Proyecciï¿½n de la instancia m_Camera
+	m_Frustum->Update(DirectX::XMMatrixMultiply(m_Camera.GetView(), m_Camera.GetProjection()));
 }
 
-void CCameraManager::Load(const std::string &Filename)
+void CCameraManager::Load(const std::string& Filename)
 {
-	//TO DO : Parsea el fichero xml Filename utilizando el método xmlParseFile
+	//TO DO : Parsea el fichero xml Filename utilizando el mï¿½todo xmlParseFile
+	const bool _ = xmlParseFile(Filename);
 }

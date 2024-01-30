@@ -1,51 +1,83 @@
 #include "FPSCameraController.h"
 #include "Camera.h"
 
-CFPSCameraController::CFPSCameraController()
-//TO DO : Inicializa la variable miembro m_YawSpeed a 100.0f
-//TO DO : Inicializa la variable miembro m_PitchSpeed a 60.0f
-//TO DO : Inicializa la variable miembro m_Speed a 5.0f
-//TO DO : Inicializa la variable miembro m_FastSpeed a 10.0f
-//TO DO : Inicializa la variable miembro m_Position a 0, 2, 0
+constexpr float g_ScreenRatio = 16.0f / 9.0f;
+constexpr float g_YawSpeedDefault = 100.0f;
+constexpr float g_PitchSpeedDefault = 60.0f;
+constexpr float g_SpeedDefault = 5.0f;
+constexpr float g_FastSpeedDefault = 10.0f;
+constexpr float g_FOVDefault{ 50.0f };
+
+CFPSCameraController::CFPSCameraController() :
+	CCameraController(),
+	//TO DO : Inicializa la variable miembro m_YawSpeed a 100.0f
+	m_YawSpeed{ g_YawSpeedDefault },
+	//TO DO : Inicializa la variable miembro m_PitchSpeed a 60.0f
+	m_PitchSpeed{ g_PitchSpeedDefault },
+	//TO DO : Inicializa la variable miembro m_Speed a 5.0f
+	m_Speed{ g_SpeedDefault },
+	//TO DO : Inicializa la variable miembro m_FastSpeed a 10.0f
+	m_FastSpeed{ g_FastSpeedDefault }
 {
+
+	//TO DO : Inicializa la variable miembro m_Position a 0, 2, 0
+	SetPosition(XMFLOAT3{ f32_0, f32_2, f32_0 });
 }
 
 CFPSCameraController::~CFPSCameraController()
-{	
+{
 }
 
 void CFPSCameraController::Move(float Strafe, float Forward, bool Speed, float ElapsedTime)
 {
-	//TO DO : Calculamos el vector dirección Forward del controlador de cámara utilizando el ángulo m_Yaw
-	//TO DO : Calculamos el vector dirección Right del controlador de cámara utilizando el ángulo m_Yaw+DEG2RAD(90.0f)
-	//TO DO : Calculamos el vector de movimiento sumando el vector Forward multiplicado por el parámetro Forward y le sumamos el vector Right multiplicado por el parámetro Strafe
-	//TO DO : Normalizamos el vector utilizando la función de DirectX XMVector3Normalize
+	//TO DO : Calculamos el vector direcciï¿½n Forward del controlador de cï¿½mara utilizando el ï¿½ngulo m_Yaw
+	const XMVECTOR l_Forward = eulerToDirection(g_RollDefault, g_PitchDefault, m_Yaw);
+	//TO DO : Calculamos el vector direcciï¿½n Right del controlador de cï¿½mara utilizando el ï¿½ngulo m_Yaw+deg2Rad(90.0f)
+	const XMVECTOR l_Right = eulerToDirection(g_RollDefault, g_PitchDefault, m_Yaw + deg2Rad(g_QuarterCircleDeg));
+	//TO DO : Calculamos el vector de movimiento sumando el vector Forward multiplicado por el parï¿½metro Forward y le sumamos el vector Right multiplicado por el parï¿½metro Strafe
+	const XMVECTOR l_Movement = l_Forward * Forward + l_Right * Strafe;
+	//TO DO : Normalizamos el vector utilizando la funciï¿½n de DirectX XMVector3Normalize
+	const XMVECTOR l_NormalizedMovement = DirectX::XMVector3Normalize(l_Movement);
 	//TO DO : Calculamos el movimiento multiplicando el vector normalizado por la variable de velocidad m_Speed y por el ElapsedTime
-	//TO DO : En caso de que el parámetro Speed sea verdadero multiplicamos el movimiento también por la variable FastSpeed
-	//TO DO : Establecemos la posición en m_Position asignándole la posición actual más el movimiento calculado
+	XMVECTOR l_EffectiveMovement = l_NormalizedMovement * m_Speed * ElapsedTime;
+	//TO DO : En caso de que el parï¿½metro Speed sea verdadero multiplicamos el movimiento tambiï¿½n por la variable FastSpeed
+	l_EffectiveMovement = l_EffectiveMovement * !Speed + l_EffectiveMovement * Speed * m_FastSpeed;
+	//TO DO : Establecemos la posiciï¿½n en m_Position asignï¿½ndole la posiciï¿½n actual mï¿½s el movimiento calculado
+	m_Position = sum(m_Position, l_EffectiveMovement);
 }
 
 void CFPSCameraController::AddYaw(float Radians)
 {
-	//TO DO : Llama al método AddYaw de la clase base CCameraController pasándole el ángulo -Radians multiplicado por la variable m_YawSpeed
+	//TO DO : Llama al mï¿½todo AddYaw de la clase base CCameraController pasï¿½ndole el ï¿½ngulo -Radians multiplicado por la variable m_YawSpeed
+	CCameraController::AddYaw(-Radians * m_YawSpeed);
 }
 
 void CFPSCameraController::AddPitch(float Radians)
 {
-	//TO DO : Llama al método AddPitch de la clase base CCameraController pasándole el ángulo Radians multiplicado por la variable m_PitchSpeed
+	//TO DO : Llama al mï¿½todo AddPitch de la clase base CCameraController pasï¿½ndole el ï¿½ngulo Radians multiplicado por la variable m_PitchSpeed
+	CCameraController::AddPitch(Radians * m_PitchSpeed);
 }
 
-void CFPSCameraController::SetCamera(CCamera *Camera) const
+void CFPSCameraController::SetCamera(CCamera* Camera) const
 {
-	//TO DO : Establecer el FOV de la cámara utilizando el método SetFOV a 50 grados en radianes utilizando la macro DEG2RAD
-	//TO DO : Establecer el AspectRatio de la cámara utilizando el método SetAspectRatio a 16.0f/9.0f
-	//TO DO : Establecer la posición de la cámara utilizando el método SetPosition
-	//TO DO : Establecer el LookAt de la cámara utilizando el método SetLookAt, el lookat será la posición más la dirección de nuestro controlador
-	//TO DO : Establecer el vector Up de la cámara utilizando el método SetUp, le pasaremos el vector Up de nuestro controlador utilizando nuestro método GetUp
-	//TO DO : Llamar al método SetMatrixs de la cámara
+	//TO DO : Establecer el FOV de la cï¿½mara utilizando el mï¿½todo SetFOV a 50 grados en radianes utilizando la macro DEG2RAD
+	Camera->SetFOV(deg2Rad(g_FOVDefault));
+	//TO DO : Establecer el AspectRatio de la cï¿½mara utilizando el mï¿½todo SetAspectRatio a 16.0f/9.0f
+	Camera->SetAspectRatio(g_ScreenRatio);
+	//TO DO : Establecer la posiciï¿½n de la cï¿½mara utilizando el mï¿½todo SetPosition
+	Camera->SetPosition(m_Position);
+	//TO DO : Establecer el LookAt de la cï¿½mara utilizando el mï¿½todo SetLookAt, el lookat serï¿½ la posiciï¿½n mï¿½s la direcciï¿½n de nuestro controlador
+	Camera->SetLookAt(combine (GetDirection(), m_Position));
+	//TO DO : Establecer el vector Up de la cï¿½mara utilizando el mï¿½todo SetUp, le pasaremos el vector Up de nuestro controlador utilizando nuestro mï¿½todo GetUp
+	Camera->SetUp(GetUp());
+	//TO DO : Llamar al mï¿½todo SetMatrixs de la cï¿½mara
+	Camera->SetMatrixs();
 }
 
 XMFLOAT3 CFPSCameraController::GetDirection() const
 {
-	//TO DO : Devuelve la dirección del controlador de cámara utilizando lós ángulos m_Yaw y m_Pitch
+	//TO DO : Devuelve la direcciï¿½n del controlador de cï¿½mara utilizando lï¿½s ï¿½ngulos m_Yaw y m_PitchXMFLOAT3 l_Right{};
+	XMFLOAT3 l_Direction;
+	DirectX::XMStoreFloat3(&l_Direction, eulerToDirection(g_RollDefault, m_Pitch, m_Yaw));
+	return l_Direction;
 }

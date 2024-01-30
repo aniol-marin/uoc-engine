@@ -6,34 +6,64 @@
 #include "InputManager.h"
 #include "MouseInput.h"
 
-CSphericalCameraController::CSphericalCameraController() 
-//TO DO : Inicializa la variable miembro m_Zoom a 50.0f
-//TO DO : Inicializa la variable miembro m_ZoomSpeed a 2.0f
+constexpr float g_AxisUpdateSpeed = 30.0f;
+constexpr float g_ZoomDefault = 50.0f;
+constexpr float g_ZoomSpeedDefault = 2.0f;
+constexpr float g_ScreenRatioDefault = 16.0f / 9.0f;
+
+CSphericalCameraController::CSphericalCameraController() :
+	//TO DO : Inicializa la variable miembro m_Zoom a 50.0f
+	m_Zoom{ g_ZoomDefault },
+	//TO DO : Inicializa la variable miembro m_ZoomSpeed a 2.0f
+	m_ZoomSpeed{ g_ZoomSpeedDefault }
 {
 }
 
 CSphericalCameraController::~CSphericalCameraController()
-{	
+{
 }
 
 XMFLOAT3 CSphericalCameraController::GetDirection() const
 {
-	//TO DO : Calcula la dirección de la cámara utilizando los ángulos Yaw y Pitch
+	//TO DO : Calcula la direcciï¿½n de la cï¿½mara utilizando los ï¿½ngulos Yaw y Pitch
+	XMFLOAT3 l_Direction;
+	DirectX::XMStoreFloat3(&l_Direction, eulerToDirection(
+		g_RollDefault,
+		m_Pitch,
+		m_Yaw));
+	return l_Direction;
 }
 
-void CSphericalCameraController::SetCamera(CCamera *Camera) const
+void CSphericalCameraController::SetCamera(CCamera* Camera) const
 {
-	//TO DO : Establecer el FOV de la cámara utilizando el método SetFOV a 50 grados en radianes utilizando la macro DEG2RAD
-	//TO DO : Establecer el AspectRatio de la cámara utilizando el método SetAspectRatio a 16.0f/9.0f
-	//TO DO : Establecer el LookAt de la cámara utilizando el método SetLookAt a la posición del controlador de cámara
-	//TO DO : Establecer la Posición de la cámara utilizando el método SetPosition, la posición de la cámara será la posición del controlador de cámara menos la dirección de nuestro controlador
-	//TO DO : Establecer el vector Up de la cámara utilizando el método SetUp, le pasaremos el vector Up de nuestro controlador utilizando nuestro método GetUp
-	//TO DO : Llamar al método SetMatrixs de la cámara
+	//TO DO : Establecer el FOV de la cï¿½mara utilizando el mï¿½todo SetFOV a 50 grados en radianes utilizando la macro DEG2RAD
+	Camera->SetFOV(deg2Rad(g_ZoomDefault));
+	//TO DO : Establecer el AspectRatio de la cï¿½mara utilizando el mï¿½todo SetAspectRatio a 16.0f/9.0f
+	Camera->SetAspectRatio(g_ScreenRatioDefault);
+	//TO DO : Establecer la Posiciï¿½n de la cï¿½mara utilizando el mï¿½todo SetPosition, la posiciï¿½n de la cï¿½mara serï¿½ la posiciï¿½n del controlador de cï¿½mara menos la direcciï¿½n de nuestro controlador
+	XMVECTOR l_Position = DirectX::XMLoadFloat3(&m_Position);
+	const XMFLOAT3 l_Handle = GetDirection();
+	const XMVECTOR l_Direction = DirectX::XMLoadFloat3(&l_Handle);
+	l_Position -= l_Direction;
+	XMFLOAT3 l_NewPosition;
+	DirectX::XMStoreFloat3(&l_NewPosition, l_Position);
+	Camera->SetPosition(l_NewPosition);
+	//TO DO : Establecer el LookAt de la cï¿½mara utilizando el mï¿½todo SetLookAt a la posiciï¿½n del controlador de cï¿½mara
+	Camera->SetLookAt(m_Position);
+	//TO DO : Establecer el vector Up de la cï¿½mara utilizando el mï¿½todo SetUp, le pasaremos el vector Up de nuestro controlador utilizando nuestro mï¿½todo GetUp
+	Camera->SetUp(GetUp());
+	//TO DO : Llamar al mï¿½todo SetMatrixs de la cï¿½mara
+	Camera->SetMatrixs();
 }
 
 void CSphericalCameraController::Update(float ElapsedTime)
 {
-	//TO DO : Añade grados al ángulo yaw del controlador de cámara utilizando el método AddYaw, para ello utilizaremos el método GetMovementX del Input de ratón multiplicado por el elapsedTime y por 30.0f como velocidad
-	//TO DO : Añade grados al ángulo pitch del controlador de cámara utilizando el método AddPitch, para ello utilizaremos el método GetMovementY del Input de ratón multiplicado por el elapsedTime y por 30.0f como velocidad
-	//TO DO : Añade zoom al controlador de cámara utilizando el método AddZoom, para ello utilizaremos el método GetMovementZ del Input de ratón multiplicado por el elapsedTime y por 2.0f como velocidad
+	const CMouseInput* l_Mouse = CUOCEngine::GetEngine()->GetInputManager()->GetMouse();
+
+	//TO DO : Aï¿½ade grados al ï¿½ngulo yaw del controlador de cï¿½mara utilizando el mï¿½todo AddYaw, para ello utilizaremos el mï¿½todo GetMovementX del Input de ratï¿½n multiplicado por el elapsedTime y por 30.0f como velocidad
+	AddYaw(deg2Rad(l_Mouse->GetMovementX() * ElapsedTime * g_AxisUpdateSpeed));
+	//TO DO : Aï¿½ade grados al ï¿½ngulo pitch del controlador de cï¿½mara utilizando el mï¿½todo AddPitch, para ello utilizaremos el mï¿½todo GetMovementY del Input de ratï¿½n multiplicado por el elapsedTime y por 30.0f como velocidad
+	AddPitch(deg2Rad(l_Mouse->GetMovementY() * ElapsedTime * g_AxisUpdateSpeed));
+	//TO DO : Aï¿½ade zoom al controlador de cï¿½mara utilizando el mï¿½todo AddZoom, para ello utilizaremos el mï¿½todo GetMovementZ del Input de ratï¿½n multiplicado por el elapsedTime y por 2.0f como velocidad
+	AddZoom(l_Mouse->GetMovementZ() * ElapsedTime * m_ZoomSpeed);
 }
