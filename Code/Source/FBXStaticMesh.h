@@ -8,6 +8,8 @@
 #include <DirectXMath.h>
 #include "defines.h"
 #include <fbxsdk.h>
+#include <PxPhysicsAPI.h>
+//#include <geometry/PxTriangleMesh.h>
 
 class CTexture;
 class CRenderableVertexs;
@@ -21,6 +23,7 @@ private:
 	std::vector<CTexture *>					m_Textures;
 	XMFLOAT3								m_Position, m_BBMin, m_BBMax;
 	float									m_Radius;
+	std::vector<physx::PxTriangleMesh *>			m_PxTriangleMeshes;
 public:
 	CFBXStaticMesh();
 	virtual ~CFBXStaticMesh();
@@ -31,6 +34,7 @@ public:
 	const XMFLOAT3 & GetBBMax() const { return m_BBMax; }
 	void Render(ID3D11DeviceContext *DeviceContext);
 	bool IsInBoundingBox(const XMFLOAT3 &Pos);
+	std::vector<physx::PxTriangleMesh *> & GetPxTriangleMeshes() { return m_PxTriangleMeshes; }
 };
 
 #endif

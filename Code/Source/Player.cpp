@@ -10,6 +10,7 @@
 #include "InputManager.h"
 #include "FPSCameraController.h"
 #include "EffectManager.h"
+#include "PhysicsManager.h"
 
 CPlayer::CPlayer(void)
 : m_Speed(10.0f)
@@ -18,7 +19,10 @@ CPlayer::CPlayer(void)
 , m_VerticalSpeed(0.0f)
 , m_VerticalSpeedJump(8.0f)
 {
-	m_FPSCameraController=(CFPSCameraController *)CUOCEngine::GetEngine()->GetCameraManager()->GetCameraController("player");
+	CUOCEngine *l_Engine = CUOCEngine::GetEngine();
+	m_FPSCameraController=(CFPSCameraController *)l_Engine->GetCameraManager()->GetCameraController("player");
+	//TO DO : Crear un character controller utilizando el método CreateCharacterController de la clase PhysicsManager del motor l_Engine y asignarlo en la variable miembro m_Controller. Utilizamos los parámetros de posición m_Position, altura de 2.0f, radio de 0.5f, stepOffset 0.5f (tamaño del escalón que se puede subir), 45 grados en radianes para el slopeLimit (grado de pendientes que se puede subir), y del grupo físico PLAYER
+	//TO DO : Asignar en el atributo userData del Actor del m_Controller este objeto (this)
 }
 
 CPlayer::~CPlayer()
@@ -36,20 +40,26 @@ void CPlayer::Move(float Strafe, float Forward, bool Fast, float ElapsedTime)
 	float l_Movement=(Fast ? m_FastSpeed : m_Speed);
 
 	m_VerticalSpeed+=(-9.81f)*ElapsedTime;
-	DirectX::XMVECTORF32 l_Vector;
-	l_Vector.v= XMLoadFloat3(&l_VectorMovement);
-	l_Vector.v=DirectX::XMVector3Normalize(l_Vector);
-	l_Vector.v = l_Vector * (l_Movement*ElapsedTime);
+	/*DirectX::XMVECTORF32 l_Vector;
+	l_Vector.v= XMLoadFloat3(&l_VectorMovement);*/
+	XMVECTOR l_Vector = XMLoadFloat3(&l_VectorMovement);
+	l_Vector=DirectX::XMVector3Normalize(l_Vector);
+	l_Vector *= l_Movement * ElapsedTime;
 	
-	l_VectorMovement=XMFLOAT3(l_Vector.f[0], l_Vector.f[1], l_Vector.f[2]);
-	l_VectorMovement.y=m_VerticalSpeed*ElapsedTime;
+	l_VectorMovement = XMFLOAT3(l_Vector.vector4_f32[0], l_Vector.vector4_f32[1], l_Vector.vector4_f32[2]);
+	l_VectorMovement.y = m_VerticalSpeed * ElapsedTime;
+
 	
-	m_Position=XMFLOAT3(m_Position.x+l_VectorMovement.x, m_Position.y+l_VectorMovement.y, m_Position.z+l_VectorMovement.z);
-	if(m_Position.y<2.0f)
-	{
-		m_Position.y=2.0f;
-		m_VerticalSpeed=0.0f;
-	}
+	PxControllerFilters l_Filters(NULL, NULL, NULL);
+	PxControllerCollisionFlags l_Flags;
+	//TO DO : Llamar al método move del controlador m_Controller pasando el vector de movimiento l_VectorMovement, 0.01f de distancia mínima, el ElapsedTime, los filtros que se encuentran en la variable l_Filters y NULL como en el parámetro de obstáculos. Asignar el valor que devuelve en la variable local l_Flags
+	//TO DO : Realizar una máscara binaria de l_Flags con PxControllerCollisionFlag::eCOLLISION_DOWN y con PxControllerCollisionFlag::eCOLLISION_UP, para comprobar si ha colisionado por arriba o ha colisionado por abajo, al comprobar si colisiona ha colisionado por arriba hay que mirar que la velocidad vertical m_VerticalSpeed sea superior a 0, para comprobar que está intentando subir 
+	if ()
+		//TO DO : En caso de que colisione por arriba o por abajo establecer la variable miembro m_VerticalSpeed el valor de 0
+
+	//TO DO : Asignar en la posición l_Position de tipo PxExtendedVec3 la posición del controlador utilizando el método getPosition de m_Controller
+	//TO DO : Asignar en la posición m_Position de tipo XMFLOAT3 la posición que hemos recogido anteriormente en l_Position
+		
 	m_FPSCameraController->SetPosition(m_Position);
 }
 

@@ -63,15 +63,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_XM_NO_INTRINSICS_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\Expat;C:\Program Files\Autodesk\FBX\FBX SDK\2020.1.1\include;$(SolutionDir)ThirdParty\AntTweakBar\include;$(SolutionDir)\ThirdParty\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\Expat;C:\Program Files\Autodesk\FBX\FBX SDK\2020.1.1\include;$(SolutionDir)ThirdParty\AntTweakBar\include;$(SolutionDir)\ThirdParty\;$(SolutionDir)ThirdParty\lua-5.3.4\src;$(SolutionDir)ThirdParty\Physx\Include</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile />
       <PrecompiledHeaderOutputFile />
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\Expat;C:\Program Files\Autodesk\FBX\FBX SDK\2020.1.1\lib\vs2017\x86\debug;$(SolutionDir)lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d11.lib;libfbxsdk-md.lib;libxml2-md.lib;zlib-md.lib;winmm.lib;libexpat.lib;D3DCompiler.lib;dinput8.lib;dxguid.lib;cal3d_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\Expat;C:\Program Files\Autodesk\FBX\FBX SDK\2020.1.1\lib\vs2017\x86\debug;$(SolutionDir)lib;$(SolutionDir)ThirdParty\Physx\Lib\Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d11.lib;libfbxsdk-md.lib;libxml2-md.lib;zlib-md.lib;winmm.lib;libexpat.lib;D3DCompiler.lib;dinput8.lib;dxguid.lib;cal3d_d.lib;PhysX3CommonDEBUG_x86.lib;PhysX3DEBUG_x86.lib;PhysX3CookingDEBUG_x86.lib;PhysX3CharacterKinematicDEBUG_x86.lib;PhysX3ExtensionsDEBUG.lib;PhysX3VehicleDEBUG.lib;PxFoundationDEBUG_x86.lib;PxTaskDEBUG_x86.lib;PxPvdSDKDEBUG_x86.lib;LuaDebug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -84,7 +84,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_XM_NO_INTRINSICS_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\Expat;C:\Program Files\Autodesk\FBX\FBX SDK\2020.1.1\include;$(SolutionDir)ThirdParty\AntTweakBar\include;$(SolutionDir)\ThirdParty\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\Expat;C:\Program Files\Autodesk\FBX\FBX SDK\2020.1.1\include;$(SolutionDir)ThirdParty\AntTweakBar\include;$(SolutionDir)\ThirdParty\;$(SolutionDir)ThirdParty\lua-5.3.4\src;$(SolutionDir)ThirdParty\Physx\Include</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile />
       <PrecompiledHeaderOutputFile />
     </ClCompile>
@@ -93,8 +93,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\Expat;C:\Program Files\Autodesk\FBX\FBX SDK\2020.1.1\lib\vs2017\x86\release;$(SolutionDir)lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d11.lib;libfbxsdk-md.lib;libxml2-md.lib;zlib-md.lib;winmm.lib;libexpat.lib;D3DCompiler.lib;dinput8.lib;dxguid.lib;cal3d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\Expat;C:\Program Files\Autodesk\FBX\FBX SDK\2020.1.1\lib\vs2017\x86\release;$(SolutionDir)lib;$(SolutionDir)ThirdParty\Physx\lib\Release</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d11.lib;libfbxsdk-md.lib;libxml2-md.lib;zlib-md.lib;winmm.lib;libexpat.lib;D3DCompiler.lib;dinput8.lib;dxguid.lib;cal3d.lib;PhysX3Common_x86.lib;PhysX3_x86.lib;PhysX3Cooking_x86.lib;PhysX3CharacterKinematic_x86.lib;PhysX3Extensions.lib;PhysX3Vehicle.lib;PxFoundation_x86.lib;PxTask_x86.lib;PxPvdSDK_x86.lib;Lua.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -117,11 +117,13 @@
     <ClInclude Include="Source\KeyboardInput.h" />
     <ClInclude Include="Source\MeshInstance.h" />
     <ClInclude Include="Source\MouseInput.h" />
+    <ClInclude Include="Source\PhysicsManager.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\RenderableObject.h" />
     <ClInclude Include="Source\RenderableObjectManager.h" />
     <ClInclude Include="Source\RenderableVertexs.h" />
     <ClInclude Include="Source\RenderManager.h" />
+    <ClInclude Include="Source\ScriptManager.h" />
     <ClInclude Include="Source\SphericalCameraController.h" />
     <ClInclude Include="Source\TextureManager.h" />
     <ClInclude Include="Source\UOCEngine.h" />
@@ -149,10 +151,12 @@
     <ClCompile Include="Source\KeyboardInput.cpp" />
     <ClCompile Include="Source\MeshInstance.cpp" />
     <ClCompile Include="Source\MouseInput.cpp" />
+    <ClCompile Include="Source\PhysicsManager.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\RenderableObject.cpp" />
     <ClCompile Include="Source\RenderableObjectManager.cpp" />
     <ClCompile Include="Source\RenderManager.cpp" />
+    <ClCompile Include="Source\ScriptManager.cpp" />
     <ClCompile Include="Source\SphericalCameraController.cpp" />
     <ClCompile Include="Source\TextureManager.cpp" />
     <ClCompile Include="Source\UOC Motor 2D_3D.cpp" />

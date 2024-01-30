@@ -60,10 +60,11 @@ void CFBXManager::ImportNode(FbxNode *Node)
 				FbxDouble3 l_Position=l_FbxNode->LclTranslation.Get();
 				FbxDouble3 l_Rotation=l_FbxNode->LclRotation.Get();
 				FbxDouble3 l_Scale=l_FbxNode->LclScaling.Get();
-				CRenderableObject *l_RenderableObject=new CMeshInstance(l_FBXStaticMesh);
+				CMeshInstance *l_RenderableObject=new CMeshInstance(l_FBXStaticMesh);
 				l_RenderableObject->SetPosition(XMFLOAT3(-(float)l_Position[0], (float)l_Position[1], -(float)l_Position[2]));
 				l_RenderableObject->SetRotation(XMFLOAT3(DEG2RAD((float)-l_Rotation[0]), DEG2RAD((float)l_Rotation[2]), DEG2RAD((float)l_Rotation[1])));
 				l_RenderableObject->SetScale(XMFLOAT3((float)l_Scale[0], (float)l_Scale[1], (float)l_Scale[2]));
+				l_RenderableObject->CreatePhysx();
 				l_RenderableObjectManager->AddRenderableObject(l_RenderableObject);
 			}
 			ImportNode(l_FbxNode);

@@ -43,6 +43,12 @@
     <Filter Include="AnimatedModels">
       <UniqueIdentifier>{6d0f3dfc-7b44-4210-b1de-e8bbb1630dc2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripting">
+      <UniqueIdentifier>{e62338e7-912e-4149-b259-4f5c5eb6f988}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{1d311d34-0fe4-4572-9371-1059a0f9bf5d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Camera.h">
@@ -131,6 +137,12 @@
     <ClInclude Include="Source\AnimatedInstanceModel.h">
       <Filter>Render</Filter>
     </ClInclude>
+    <ClInclude Include="Source\PhysicsManager.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ScriptManager.h">
+      <Filter>Scripting</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Camera.cpp">
@@ -213,6 +225,12 @@
     </ClCompile>
     <ClCompile Include="Source\AnimatedInstanceModel.cpp">
       <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PhysicsManager.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ScriptManager.cpp">
+      <Filter>Scripting</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

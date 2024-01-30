@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include "defines.h"
+#include <PxPhysicsAPI.h>
 
 class CFPSCameraController;
 
@@ -15,6 +16,7 @@ private:
 	float					m_VerticalSpeedJump;
 
 	CFPSCameraController	*m_FPSCameraController;
+	physx::PxController		*m_Controller;
 public:
 	CPlayer();
 	virtual ~CPlayer();

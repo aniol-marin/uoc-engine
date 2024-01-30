@@ -5,6 +5,7 @@
 #include "UOCEngine.h"
 #include "RenderManager.h"
 #include "TextureManager.h"
+#include "PhysicsManager.h"
 
 CFBXStaticMesh::CFBXStaticMesh()
 : m_Effect(NULL)
@@ -142,6 +143,11 @@ bool CFBXStaticMesh::Generate(FbxNode *Node, FbxMesh *Mesh)
  	for(size_t i=0; i<m_Textures.size(); ++i)
 	{
 		CRenderableVertexs *l_RenderableVertexs=new CTriangleListRenderableIndexed16Vertexs<UOC_POSITION_NORMAL_TEXTURE_VERTEX>(l_Device, &l_FullVertexs[i][0].Position.x, (unsigned int)l_FullVertexs[i].size(), &l_Indices[i][0], (unsigned int)l_Indices[i].size());
+		unsigned int l_Stride = sizeof(UOC_POSITION_NORMAL_TEXTURE_VERTEX);
+		std::vector<unsigned int> l_Indexs;
+		for (unsigned short j = 0; j < l_Indices[i].size(); ++j)
+			l_Indexs.push_back(l_Indices[i][j]);
+		//TO DO : Añadir una malla de triángulos de tipo PxTriangleMesh en el vector de m_PxTriangleMeshes utilizando el método push_back. Para ello utilizar utilizaremos el método CreateTriangleMesh de la clase PhysicsManager que se encuentra en la clase singleton CUOCEngine, le pasaremos la dirección de los vértices que se encuentra en la variable l_FullVertexs, la dirección de los índices l_Indexs, el número de vértices y el número de triángulos (número de íncies dividido entre tres) y el tamaño del tipo de vértice UOC_POSITION_NORMAL_TEXTURE_VERTEX
 		m_RenderableVertexs.push_back(l_RenderableVertexs);
 	}
 	

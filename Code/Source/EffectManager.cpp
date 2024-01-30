@@ -50,7 +50,6 @@ CEffectManager::CEffectManager()
 	AddEffect<UOC_POSITION_TEXTURE_VERTEX>(l_Device, "./Data/Effects/UOC_POSITION_TEXTURE_VERTEXShader.fx", "VS", "vs_4_0", "PS", "ps_4_0");
 	AddEffect<UOC_POSITION_NORMAL_TEXTURE_VERTEX>(l_Device, "./Data/Effects/UOC_POSITION_NORMAL_TEXTURE_VERTEXShader.fx", "VS", "vs_4_0", "PS", "ps_4_0");
 	AddEffect<UOC_POSITION_COLOR_TEXTURE_VERTEX>(l_Device, "./Data/Effects/UOC_POSITION_COLOR_TEXTURE_VERTEXShader.fx", "VS", "vs_4_0", "PS", "ps_4_0");
-	//TO DO : Añadir un efecto utilizando el método templatizado AddEffect<UOC_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX> que encontramos en el fichero "./Data/Effects/UOC_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEXShader.fx" dónde el punto de entrada del Vertex Shader es "VS", el Shader Model del Vertex Shader es "vs_4_0", el punto de entrada del Pixel Shader es "PS" y el Shader Model del Pixel Shader es "ps_4_0"
 	AddEffect<UOC_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX>(l_Device, "./Data/Effects/UOC_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEXShader.fx", "VS", "vs_4_0", "PS", "ps_4_0");
 	
 	CreateConstantBuffer(l_Device, sizeof(m_SceneConstantBufferParameters), &m_SceneConstantBuffer);

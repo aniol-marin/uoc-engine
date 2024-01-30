@@ -14,6 +14,8 @@ class CFBXManager;
 class CRenderableObjectManager;
 class CTextureManager;
 class CAnimatedModelManager;
+class CPhysicsManager;
+class CScriptManager;
 
 class CUOCEngine
 {
@@ -32,6 +34,8 @@ private:
 	CRenderableObjectManager	*m_RenderableObjectManager;
 	CTextureManager				*m_TextureManager;
 	CAnimatedModelManager		*m_AnimatedModelManager;
+	CPhysicsManager				*m_PhysicsManager;
+	CScriptManager				*m_ScriptManager;
 
 	CUOCEngine();
 
@@ -53,6 +57,8 @@ public:
 	CRenderableObjectManager * GetRenderableObjectManager() const { return m_RenderableObjectManager; }
 	CTextureManager * GetTextureManager() const { return m_TextureManager; }
 	CAnimatedModelManager * GetAnimatedModelManager() const { return m_AnimatedModelManager; }
+	CPhysicsManager * GetPhysicsManager() const { return m_PhysicsManager; }
+	CScriptManager * GetcriptManager() const { return m_ScriptManager; }
 	bool IsAntTweakBarActive() const { return m_DrawAntTweakBar; }
 	void ToggleAnTweakBar() { m_DrawAntTweakBar = !m_DrawAntTweakBar; }
 	float GetElapsedTime() const { return m_ElapsedTime; }
