@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Cameras">
+      <UniqueIdentifier>{9d793fbe-b41c-492e-a976-fa7f9908f11d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DebugRender">
+      <UniqueIdentifier>{cfe5fc69-d8de-4fba-b8ff-5b542c52be93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EffectManager">
+      <UniqueIdentifier>{aa0a6613-9e36-491b-8d7b-32c992326ff6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{af876fbe-6e0a-47b2-a81d-24d41842ebc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FBXManager">
+      <UniqueIdentifier>{992bbff1-2902-47d9-9bce-ce85fb828f98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{b83572c2-616d-4166-9336-5c56a0cb105a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render">
+      <UniqueIdentifier>{2e29c62c-ebe1-4111-956f-bce75ad9b68d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Textures">
+      <UniqueIdentifier>{fa6342d3-5fd7-4b77-8d50-d753f6f41728}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\Keyboard">
+      <UniqueIdentifier>{8b2fafa7-5ea3-4cf8-a316-369fd825bb8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\Mouse">
+      <UniqueIdentifier>{98814627-2d86-40ee-b8c0-fa3fda655825}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ParserFile">
+      <UniqueIdentifier>{e288ca22-773c-457c-99d1-407195aa3741}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{d2c8a8ff-8d6b-4203-81b3-c9aa60e556a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderableVertexs">
+      <UniqueIdentifier>{2c396100-b830-43c9-a434-f81d8f0324ee}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Camera.h">
+      <Filter>Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CameraController.h">
+      <Filter>Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CameraManager.h">
+      <Filter>Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FPSCameraController.h">
+      <Filter>Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Frustum.h">
+      <Filter>Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SphericalCameraController.h">
+      <Filter>Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DebugRender.h">
+      <Filter>DebugRender</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EffectManager.h">
+      <Filter>EffectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UOCEngine.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DDSTextureLoader11.h">
+      <Filter>Engine\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TextureManager.h">
+      <Filter>Engine\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FBXManager.h">
+      <Filter>FBXManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FBXStaticMesh.h">
+      <Filter>FBXManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\InputManager.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\KeyboardInput.h">
+      <Filter>Input\Keyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MouseInput.h">
+      <Filter>Input\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\expat\expat.h">
+      <Filter>ParserFile</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\expat\XMLParser.h">
+      <Filter>ParserFile</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MeshInstance.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\RenderableObject.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\RenderableObjectManager.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\RenderManager.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\RenderableVertexs.h">
+      <Filter>RenderableVertexs</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\VertexTypes.h">
+      <Filter>RenderableVertexs</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ApplicationDX.h" />
+    <ClInclude Include="Source\defines.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CameraController.cpp">
+      <Filter>Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CameraManager.cpp">
+      <Filter>Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FPSCameraController.cpp">
+      <Filter>Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Frustum.cpp">
+      <Filter>Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SphericalCameraController.cpp">
+      <Filter>Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DebugRender.cpp">
+      <Filter>DebugRender</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EffectManager.cpp">
+      <Filter>EffectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UOCEngine.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DDSTextureLoader11.cpp">
+      <Filter>Engine\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TextureManager.cpp">
+      <Filter>Engine\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FBXManager.cpp">
+      <Filter>FBXManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FBXStaticMesh.cpp">
+      <Filter>FBXManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\InputManager.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\KeyboardInput.cpp">
+      <Filter>Input\Keyboard</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MouseInput.cpp">
+      <Filter>Input\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\expat\XMLParser.cpp">
+      <Filter>ParserFile</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Player.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MeshInstance.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\RenderableObject.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\RenderableObjectManager.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\RenderManager.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\VertexTypes.cpp">
+      <Filter>RenderableVertexs</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ApplicationDX.cpp" />
+    <ClCompile Include="Source\defines.cpp" />
+    <ClCompile Include="Source\UOC Motor 2D_3D.cpp" />
+  </ItemGroup>
+</Project>
