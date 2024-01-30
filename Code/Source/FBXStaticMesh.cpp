@@ -148,6 +148,14 @@ bool CFBXStaticMesh::Generate(FbxNode *Node, FbxMesh *Mesh)
 		for (unsigned short j = 0; j < l_Indices[i].size(); ++j)
 			l_Indexs.push_back(l_Indices[i][j]);
 		//TO DO : Añadir una malla de triángulos de tipo PxTriangleMesh en el vector de m_PxTriangleMeshes utilizando el método push_back. Para ello utilizar utilizaremos el método CreateTriangleMesh de la clase PhysicsManager que se encuentra en la clase singleton CUOCEngine, le pasaremos la dirección de los vértices que se encuentra en la variable l_FullVertexs, la dirección de los índices l_Indexs, el número de vértices y el número de triángulos (número de íncies dividido entre tres) y el tamaño del tipo de vértice UOC_POSITION_NORMAL_TEXTURE_VERTEX
+		CUOCEngine* l_Engine = CUOCEngine::GetEngine();
+		CPhysicsManager* l_PhysicsManager = l_Engine->GetPhysicsManager();
+		UOC_POSITION_NORMAL_TEXTURE_VERTEX* l_VertexData = l_FullVertexs[i].data();
+		unsigned int* l_IndexData = l_Indexs.data();
+		unsigned short l_VertexSize = l_FullVertexs[i].size();
+		unsigned short l_IndexSize = l_Indexs.size() / 3;
+		PxTriangleMesh* l_Mesh = l_PhysicsManager->CreateTriangleMesh(l_VertexData, l_IndexData, l_VertexSize, l_IndexSize, l_Stride);
+		m_PxTriangleMeshes.push_back(l_Mesh);
 		m_RenderableVertexs.push_back(l_RenderableVertexs);
 	}
 	

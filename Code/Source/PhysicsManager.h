@@ -38,6 +38,7 @@ public:
 	PxTriangleMesh * CreateTriangleMesh(void *Vertexs, unsigned int *Indices, unsigned short NumVertexs, unsigned short FacesCount, unsigned int VertexStride);
 	void Update(float ElapsedTime);
 	PxRigidStatic * CreateRigidStatic(physx::PxTriangleMesh *TriangleMesh, const PxVec3 &Position);
+	PxRigidDynamic * CreateRigidDynamic(float Radius, const PxVec3 &Position);
 	PxController * CreateCharacterController(const XMFLOAT3 &Position, float Height, float Radius, float StepOffset, float SlopeLimitInRadians, TPhysicsGroup PhysicsGroup);
 	bool TestRaycast(const XMFLOAT3 &Origin, const XMFLOAT3 &Destiny, unsigned short PhysicsGroupFilterMask, XMFLOAT3 &OutPosition, void **OutUserData);
 	bool TestRaycast(const XMFLOAT3 &Origin, const XMFLOAT3 &Direction, float Distance, unsigned short PhysicsGroupFilterMask, XMFLOAT3 &OutPosition, void **OutUserData);
