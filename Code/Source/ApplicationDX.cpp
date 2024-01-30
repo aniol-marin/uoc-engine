@@ -38,10 +38,16 @@ void CApplicationDX::Init(HWND hWnd, int Width, int Height)
 	
 	CAnimatedCoreModel *l_AnimatedCoreModel;
 	//TO DO : Inicializar la variable l_AnimatedCoreModel recogiendo el Actor de nombre "bot" y path "Data/Models/Bot/" de la clase CAnimatedModelManager que se encuentra en la clase CUOCEngine
+	l_AnimatedCoreModel = CUOCEngine::GetEngine()->GetAnimatedModelManager()->GetActor("bot", "Data/Models/Bot/");
 	//TO DO : Añade un modelo animado de tipo l_AnimatedCoreModel en la clase CRenderableObjectManager que se encuentra en la clase CUOCEngine en la posición (0.0f, 0.0f, 0.0f), rotación (0.0f, 0.0f, 0.0f) y escala (2.0f, 2.0f, 2.0f)
+	CRenderableObjectManager* l_Manager =  CUOCEngine::GetEngine()->GetRenderableObjectManager();
+	l_Manager->AddAnimatedModel(l_AnimatedCoreModel, XMFLOAT3{ 0.0f, 0.0f, 0.0f }, XMFLOAT3{ 0.0f, 0.0f, 0.0f }, XMFLOAT3{ 2.0f, 2.0f, 2.0f });
 	//TO DO : Añade un modelo animado de tipo l_AnimatedCoreModel en la clase CRenderableObjectManager que se encuentra en la clase CUOCEngine en la posición (33.0f, 2.3f, -18.0f), rotación (0.0f, 0.0f, 0.0f) y escala (2.0f, 2.0f, 2.0f)
+	l_Manager->AddAnimatedModel(l_AnimatedCoreModel, XMFLOAT3{ 33.0f, 2.3f, -18.0f }, XMFLOAT3{ 0.0f, 0.0f, 0.0f }, XMFLOAT3{ 2.0f, 2.0f, 2.0f });
 	//TO DO : Añade un modelo animado de tipo l_AnimatedCoreModel en la clase CRenderableObjectManager que se encuentra en la clase CUOCEngine en la posición (68.0f, -0.8f, 6.0f), rotación (0.0f, 0.0f, 0.0f) y escala (2.0f, 2.0f, 2.0f)
+	l_Manager->AddAnimatedModel(l_AnimatedCoreModel, XMFLOAT3{ 68.0f, -0.8f, 6.0f }, XMFLOAT3{ 0.0f, 0.0f, 0.0f }, XMFLOAT3{ 2.0f, 2.0f, 2.0f });
 	//TO DO : Añade un modelo animado de tipo l_AnimatedCoreModel en la clase CRenderableObjectManager que se encuentra en la clase CUOCEngine en la posición (17.0f, -5.7f, 31.0f), rotación (0.0f, 0.0f, 0.0f) y escala (2.0f, 2.0f, 2.0f)
+	l_Manager->AddAnimatedModel(l_AnimatedCoreModel, XMFLOAT3{ 17.0f, -5.7f, 31.0f }, XMFLOAT3{ 0.0f, 0.0f, 0.0f }, XMFLOAT3{ 2.0f, 2.0f, 2.0f });
 }
 
 void CApplicationDX::Render()
